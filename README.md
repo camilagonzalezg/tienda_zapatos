@@ -1,2 +1,2 @@
-# tienda_zapatos
-Proyecto que ocupa Django, python, template de bootstrap 5, sin conexión a BD
+# Evaluación 1 - Entrega 4 de octubre
+Grabación que contiene muestra de código y funcionamiento: 
