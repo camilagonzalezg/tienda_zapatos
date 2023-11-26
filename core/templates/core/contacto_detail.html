@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}
+  <title>Detalle Cliente Registrado</title>
+{% endblock %}
+{% block contenido-principal %}
+<section class="py-5 pt-0">
+    <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div class="card" style="width: 30rem; padding: 1.5em 0.5em 0.5em;
+      margin: 1.5em;
+      text-align: center;
+      border-radius: 2em;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);">
+        <a href="{{ contacto.get_absolute_url }}">
+        <img src="https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg" 
+        style=" width: 40%;
+        border-radius: 50%;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"
+        alt="..." />
+        </a>
+        <div class="card-body">
+          <h5 class="card-title" style="  font-weight: bold;
+          font-size: 1.5em;">{{ contacto.nombre }} {{ contacto.apellido }}</h5>
+          <p class="card-text">
+            <strong>Id: </strong>{{contacto.id}}<br>
+            <strong>Nombre: </strong>{{contacto.nombre}}<br>
+            <strong>Apellido: </strong>{{contacto.apellido}}<br>
+            <strong>Email: </strong>{{contacto.email}}<br>
+            <strong>Asunto: </strong>{{contacto.asunto}}<br>
+            <strong>Mensaje: </strong>{{contacto.mensaje}}
+          </p>
+          <a href="{{ contacto.get_absolute_url }}" class="btn btn-outline-dark mt-auto" style="border-radius: 2em;
+          padding: 0.5em 1.5em;">Ver perfil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+{% endblock contenido-principal %}
+

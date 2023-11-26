@@ -24,7 +24,7 @@ class ClienteAdmin(admin.ModelAdmin):
         )
     
 class ContactoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'asunto', 'mensaje', 'copia')
+    list_display = ('id', 'email', 'asunto', 'mensaje', 'copia', 'nombre', 'apellido')
     list_filter = ('email', )
     
 class ProfesionAdmin(admin.ModelAdmin):

@@ -13,11 +13,13 @@ urlpatterns = [
     path('prodsxcateg/', views.productos_categoria, name='productos-categoria'),
     #Listas
     path('productos/', views.ProductoListView.as_view(), name='productos'),
+    path('contactos/', views.ContactoListView.as_view(), name='contactos'),
     path('clientes/', views.ClienteListView.as_view(), name='clientes'),
     path('categorias/', views.CategoriaListView.as_view(), name='categorias'),
     path('formulario/', views.formulario, name='formulario'),
     #Detalles
     path('producto/<int:pk>/', views.ProductoDetailView.as_view(), name='producto-detail'),
     path('cliente/<int:pk>/', views.ClienteDetailView.as_view(), name='cliente-detail'),
+    path('contacto/<int:pk>/', views.ContactoDetailView.as_view(), name='contacto-detail'),
     path('categoria/<int:pk>/', views.CategoriaDetailView.as_view(), name='categoria-detail'),
 ]

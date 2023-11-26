@@ -30,6 +30,9 @@ class CategoriaListView(generic.ListView):
     
 class ClienteListView(generic.ListView):
     model = Cliente
+
+class ContactoListView(generic.ListView):
+    model = Contacto
     
 #Vistas para busquedas
 def buscar_productos(request):
@@ -60,11 +63,12 @@ def formcontacto(request):
         if form.is_valid():
             # Se obtiene informacion del formulario
             # Se utiliza la lista "cleaned_data"
+            nombreform = form.cleaned_data['nombre']
+            apellidoform = form.cleaned_data['apellido']
             asuntoform = form.cleaned_data['asunto']
             emailform = form.cleaned_data['email']
             mensajeform = form.cleaned_data['mensaje']
             cc_ami = form.cleaned_data['cc_ami']
-            nombre = form.cleaned_data['nombre']
             recipients = ['camilag@gmail.com']
             
             # Se puede enviar un correo
@@ -76,7 +80,7 @@ def formcontacto(request):
             send_mail(asuntoform, mensajeform, emailform, recipients)
 
             # Se puede guardar en la bbdd en un Modelo de contacto
-            contacto = Contacto(asunto=asuntoform, email=emailform, mensaje=mensajeform, copia=cc_ami)
+            contacto = Contacto(nombre=nombreform, apellido=apellidoform, asunto=asuntoform, email=emailform, mensaje=mensajeform, copia=cc_ami)
             contacto.save()
             return HttpResponseRedirect('/core/gracias')
     else:
@@ -96,8 +100,14 @@ class ClienteDetailView(generic.DetailView):
 class CategoriaDetailView(generic.DetailView):
     model = Categoria
     
+class ContactoDetailView(generic.DetailView):
+    model = Contacto
+    
 def formulario(request):
     return render(request, "core/formulario.html")
 
 def producto(request):
     return render(request, "core/producto.html")
+
+def contacto(request):
+    return render(request, "core/contacto.html")
