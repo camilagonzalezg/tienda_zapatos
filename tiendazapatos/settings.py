@@ -132,5 +132,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'camilag@gmail.com'
 # Password generada con segunda autenticacion de gmail
-# EMAIL_HOST_PASSWORD = 'xvrbxbhiqbyrezpp '
+
 EMAIL_PORT = 587
