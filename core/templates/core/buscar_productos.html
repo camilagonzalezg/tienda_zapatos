@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+ 
+{% block titulo %}
+  Buscar Productos
+{% endblock titulo %}
+{% block contenido-principal %}
+
+<form action="/core/prodsxcateg" method="get">
+  <div class="mb-3 col-md-6">
+    <label for="exampleInputCategoria1" class="form-label">Categoria</label>
+    <select name="cod_categoria" class="form-select" aria-label="Default select example">
+      <option selected value="0">Selecciona la categoría</option>
+      {% for categoria in categorias %}
+      <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+      {% endfor %}
+    </select>
+    <div id="CategoriaHelp" class="form-text">Selecciona la categoría a buscar.</div>
+  </div>
+ 
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>  
+{% endblock contenido-principal %}

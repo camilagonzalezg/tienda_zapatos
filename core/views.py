@@ -1,192 +1,103 @@
 from django.shortcuts import render
-from datetime import datetime
+from .models import Cliente, Producto, Categoria, Contacto
+from django.views import generic
+from .forms import FormularioContacto
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
 # Create your views here.
-
 def index(request):
-    return render(request, "core/index.html")
-
-def producto(request, producto_id):
-    # Convierte producto_id a un entero
-    producto_id = int(producto_id)
-
-    # Definir un diccionario con los detalles de los productos (simulado)
-    productos = {
-                1: {"nombre":"Zapatillas",
-                "id": 1,
-                "SKU": "ZAP-498",
-                "descripcion": "Unas lindas zapatillas que se ven bien tanto de viaje, uso diario o incluso cuando salgas con tus amigos. Todo es material de cuero",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000", 
-                "precioactual":"$35.000", 
-                "imagen1": "zapatillas.png",
-                "imagen2": "zapatillas2.png" },
-                2: {"nombre":"Botas", 
-                "id": 2,
-                "SKU": "BOT-723",
-                "descripcion": "Estas botas te acompañarán en todas, son perfectas para causar impresión en una salida nocturna o cuando vas de viaje. Todo es material de cuero",
-                "calificacion": 3,
-                "oferta": "En oferta",
-                "precioanterior": "$70.000", 
-                "precioactual":"$60.000", 
-                "imagen1": "botas.png",
-                "imagen2": "botas2.png" },
-                3: {"nombre":"Sandalias",
-                "id": 3, 
-                "SKU": "SAND-842",
-                "descripcion": "Estas sandalias no solo son onderas, sino que te permitirán tener tus pies frescos y cómodos en cualquier viaje que hagas. Todo es material de cuero",
-                "calificacion": 2.5,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$25.000", 
-                "imagen1": "sandalias.png",
-                "imagen2": "sandalias2.png" },
-                4: {"nombre":"Pantuflas",
-                "id": 4,
-                "SKU": "PANT-934",
-                "descripcion": "Si llegas del trabajo cansado y con ganas de colocarte algo más cómodo, estas pantuflas te vendrán de maravilla, son cómodas, bonitas y tus pies se sentirán de maravilla",
-                "calificacion": 4,
-                "oferta": "",
-                "precioanterior": " ",  
-                "precioactual":"$20.000", 
-                "imagen1": "pantuflas.png",
-                "imagen2": "pantuflas2.png" },
-                5: {"nombre":"Mocasines",
-                "id": 5,
-                "SKU": "MOC-536",
-                "descripcion": "¿Cansado de zapatos duros?, estos mocasines son perfectos para cualquier ocasión, ya sea de trabajo o de vida cotidiana. Todo es material de cuero.",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000", 
-                "precioactual":"$30.000", 
-                "imagen1": "mocasines.png",
-                "imagen2": "mocasines2.png" },
-                6: {"nombre":"Crocs", 
-                "id": 6,
-                "SKU": "CROC-499",
-                "descripcion": "Estos zapatos son famosos por su excelente comodidad, además de ser útiles para tu quehacer cotidiano, donde tus pies se sentirán frescos y cómodos",
-                "calificacion": 3.5,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$25.000", 
-                "imagen1": "crocs.png",
-                "imagen2": "crocs2.png" },
-                7: {"nombre":"Bamers",
-                "id": 7,
-                "SKU": "BAM-334",
-                "descripcion": "Esta marca ha revolucionado la forma en que mantendrás tus pies calientes ante cualquier panorama, ya sea en tu trabajo, vida cotidiana o viaje. Te aseguramos comodidad.",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000",  
-                "precioactual":"$35.000", 
-                "imagen1": "bamers.png",
-                "imagen2": "bamers2.png" },
-                8: {"nombre":"Condoritas",
-                "id": 8,
-                "SKU": "COND-009",
-                "descripcion": "Ya sea para tu baño o vacaciones, e incluso paseos por la ciudad, estas condoritas ofrecen frescura y al mismo tiempo de calidad, ya que son fabricadas con caucho de primera calidad",
-                "calificacion": 3,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$15.000", 
-                "imagen1": "condoritas.png",
-                "imagen2": "condoritas2.png" },
-    }
-
-    # Obtén los detalles del producto según el producto_id
-    producto = productos.get(producto_id)
-    return render(request, 'core/producto.html', {'producto': producto})
-
-def productos(request):
-    ahora = datetime.now()
-    #Datos parta renderizar  
-    #Se genera diccionario con información de los zapatos.
-    productos =  {
-                "zapato1": {"nombre":"Zapatillas",
-                "id": 1,
-                "SKU": "ZAP-498",
-                "descripcion": "Unas lindas zapatillas que se ven bien tanto de viaje, uso diario o incluso cuando salgas con tus amigos. Todo es material de cuero",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000", 
-                "precioactual":"$35.000", 
-                "imagen1": "zapatillas.png",
-                "imagen2": "zapatillas2.png" },
-                "zapato2": {"nombre":"Botas", 
-                "id": 2,
-                "SKU": "BOT-723",
-                "descripcion": "Estas botas te acompañarán en todas, son perfectas para causar impresión en una salida nocturna o cuando vas de viaje. Todo es material de cuero",
-                "calificacion": 3,
-                "oferta": "En oferta",
-                "precioanterior": "$70.000", 
-                "precioactual":"$60.000", 
-                "imagen1": "botas.png",
-                "imagen2": "botas2.png" },
-                "zapato3": {"nombre":"Sandalias",
-                "id": 3, 
-                "SKU": "SAND-842",
-                "descripcion": "Estas sandalias no solo son onderas, sino que te permitirán tener tus pies frescos y cómodos en cualquier viaje que hagas. Todo es material de cuero",
-                "calificacion": 2.5,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$25.000", 
-                "imagen1": "sandalias.png",
-                "imagen2": "sandalias2.png" },
-                "zapato4": {"nombre":"Pantuflas",
-                "id": 4,
-                "SKU": "PANT-934",
-                "descripcion": "Si llegas del trabajo cansado y con ganas de colocarte algo más cómodo, estas pantuflas te vendrán de maravilla, son cómodas, bonitas y tus pies se sentirán de maravilla",
-                "calificacion": 4,
-                "oferta": "",
-                "precioanterior": " ",  
-                "precioactual":"$20.000", 
-                "imagen1": "pantuflas.png",
-                "imagen2": "pantuflas2.png" },
-                "zapato5": {"nombre":"Mocasines",
-                "id": 5,
-                "SKU": "MOC-536",
-                "descripcion": "¿Cansado de zapatos duros?, estos mocasines son perfectos para cualquier ocasión, ya sea de trabajo o de vida cotidiana. Todo es material de cuero.",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000", 
-                "precioactual":"$30.000", 
-                "imagen1": "mocasines.png",
-                "imagen2": "mocasines2.png" },
-                "zapato6": {"nombre":"Crocs", 
-                "id": 6,
-                "SKU": "CROC-499",
-                "descripcion": "Estos zapatos son famosos por su excelente comodidad, además de ser útiles para tu quehacer cotidiano, donde tus pies se sentirán frescos y cómodos",
-                "calificacion": 3.5,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$25.000", 
-                "imagen1": "crocs.png",
-                "imagen2": "crocs2.png" },
-                "zapato7": {"nombre":"Bamers",
-                "id": 7,
-                "SKU": "BAM-334",
-                "descripcion": "Esta marca ha revolucionado la forma en que mantendrás tus pies calientes ante cualquier panorama, ya sea en tu trabajo, vida cotidiana o viaje. Te aseguramos comodidad.",
-                "calificacion": 5,
-                "oferta": "En oferta",
-                "precioanterior": "$40.000",  
-                "precioactual":"$35.000", 
-                "imagen1": "bamers.png",
-                "imagen2": "bamers2.png" },
-                "zapato8": {"nombre":"Condoritas",
-                "id": 8,
-                "SKU": "COND-009",
-                "descripcion": "Ya sea para tu baño o vacaciones, e incluso paseos por la ciudad, estas condoritas ofrecen frescura y al mismo tiempo de calidad, ya que son fabricadas con caucho de primera calidad",
-                "calificacion": 3,
-                "oferta": "",
-                "precioanterior": " ", 
-                "precioactual":"$15.000", 
-                "imagen1": "condoritas.png",
-                "imagen2": "condoritas2.png" },
+    #Generacion de contadores para los modelos
+    cant_clientes = Cliente.objects.all().count()
+    cant_productos = Producto.objects.all().count()
+    cant_categorias = Categoria.objects.all().count()
+    #Obtencion de productos en la categoria "varios"
+    prod_categoria = Producto.objects.filter(categoria__exact = '4').count()
+    contexto = {'cant_clientes': cant_clientes,
+                'cant_productos': cant_productos,
+                'cant_categoria': cant_categorias,
+                'prod_categoria': prod_categoria
                 }
-    
-    datos = {"fecha": ahora, "productos": productos}
-    return render(request, "core/productos.html", datos)
+    return render(request, 'core/index.html', contexto)
 
+class ProductoListView(generic.ListView):
+    model = Producto
+    # Paginacion
+    paginate_by = 6
+    
+class CategoriaListView(generic.ListView):
+    model = Categoria
+    
+class ClienteListView(generic.ListView):
+    model = Cliente
+    
+#Vistas para busquedas
+def buscar_productos(request):
+    categorias = Categoria.objects.all()
+    return render(request, "core/buscar_productos.html", {'categorias':categorias})
+
+def productos_categoria(request):
+    # Se utiliza el objeto request para obtener el parametro de la peticion
+    if request.GET['cod_categoria'] and request.GET['cod_categoria'] !='0':
+        cod_categoria = request.GET['cod_categoria']
+        # Se recuperan del modelo Producto, los productos de la categoria
+        lst_productos = Producto.objects.filter(categoria__exact=cod_categoria)
+        # Se busca el objeto de la Categoria
+        categoria = Categoria.objects.get(id__exact=cod_categoria)
+        # Se genera un contexto
+        contexto = {'productos':lst_productos,'categoria':categoria}
+    else:
+        contexto = {'categoria':'Debes seleccionar una categoria'}
+    return render(request, "core/productos_categoria.html", contexto)
+
+# Formulario de contacto
+# Vista que atiende las peticiones
+def formcontacto(request):
+    if request.method == 'POST':
+        # Se crea una instancia del formulario (Clase de forms.py)
+        form = FormularioContacto(request.POST)
+        # Se verifica si el formulario es valido
+        if form.is_valid():
+            # Se obtiene informacion del formulario
+            # Se utiliza la lista "cleaned_data"
+            asuntoform = form.cleaned_data['asunto']
+            emailform = form.cleaned_data['email']
+            mensajeform = form.cleaned_data['mensaje']
+            cc_ami = form.cleaned_data['cc_ami']
+            nombre = form.cleaned_data['nombre']
+            recipients = ['camilag@gmail.com']
+            
+            # Se puede enviar un correo
+            # Se agrega lista de destinatarios
+            if cc_ami:
+                recipients.append(emailform)
+                
+            #Se puede enviar un correo
+            send_mail(asuntoform, mensajeform, emailform, recipients)
+
+            # Se puede guardar en la bbdd en un Modelo de contacto
+            contacto = Contacto(asunto=asuntoform, email=emailform, mensaje=mensajeform, copia=cc_ami)
+            contacto.save()
+            return HttpResponseRedirect('/core/gracias')
+    else:
+        form = FormularioContacto()
+    return render(request, 'core/formulario.html', {'form':form})
+    
+def gracias(request):
+    return render(request, 'core/gracias.html')
+
+#Creacion de vistas en detalle, basada en clases
+class ProductoDetailView(generic.DetailView):
+    model = Producto
+
+class ClienteDetailView(generic.DetailView):
+    model = Cliente
+    
+class CategoriaDetailView(generic.DetailView):
+    model = Categoria
+    
 def formulario(request):
     return render(request, "core/formulario.html")
+
+def producto(request):
+    return render(request, "core/producto.html")

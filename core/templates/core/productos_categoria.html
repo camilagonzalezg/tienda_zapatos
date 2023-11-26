@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+ 
+{% block titulo %}
+  Productos por Categoria
+{% endblock titulo %}
+{% block contenido-principal %}
+<h1>Tienda de Productos - Tiendita</h1>
+ 
+  <p>Bienvenido a la <em><strong>Tiendita</strong></em>, la mejor tienda de productos del país.</p>
+ 
+{% if productos %} 
+  <h2>Productos por Categoría ({{categoria}})</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prod in productos %}
+      <tr>
+        <th scope="row"><a href="{{prod.get_absolute_url}}">{{prod.id}}</a></th>  
+        <!--th scope="row">{{prod.id}}</th-->  
+        <td>{{prod.nombre}}</td>
+        <td>{{prod.precio}}</td>
+        <td>{{prod.stock}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}  
+  <h2>Productos por Categoría</h2>
+  <p>{{categoria}}</p>  
+{% endif %}  
+{% endblock contenido-principal %}

@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}
+Categorías
+{% endblock titulo %}
+{% block contenido-principal %}
+<h1>Lista de Categorías</h1>
+{% if categoria_list %}
+  <ul>
+    {% for categoria in categoria_list %}
+      <li>
+        <a href="{{ categoria.get_absolute_url }}">{{ categoria.nombre }}</a> ({{ categoria.id }})
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>¡No hay categorias registrados!</p>
+{% endif %}
+{% endblock contenido-principal %}

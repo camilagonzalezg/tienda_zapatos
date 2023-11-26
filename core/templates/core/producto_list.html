@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}
+  Productos
+{% endblock titulo %}
+{% block contenido-principal %}
+{% load static %}
+
+{% if producto_list %}
+  <section class="py-5 pb-0">
+    <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for producto in producto_list %}
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Sale badge -->
+              {% if producto.oferta %}
+              <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">
+                En oferta
+              </div>
+            {% endif %}
+              <!-- Product image -->
+              <a href="{{ producto.get_absolute_url }}">
+                {% if producto.imagen %}
+                <img class="card-img-top" src="{{ producto.imagen1.url }}" alt="Imagen de {{ producto.nombre }}" />
+                {% else %}
+                <img class="card-img-top" src="{{ producto.imagen1.url }}" alt="Imagen de {{ producto.nombre }}" />
+                {% endif %}
+              </a>
+              <!-- Product details -->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name -->
+                    <div class="colorcitolink2">
+                      <a href="{{ producto.get_absolute_url }}">
+                      <h5 class="fw-bolder">{{ producto.nombre }}</h5>
+                      </a>
+                    </div>
+                  <!-- Product reviews -->
+                  <div class="d-flex justify-content-center small text-warning mb-2">
+                    {% for _ in "12345" %}
+                      {% if forloop.counter <= producto.calificacion %}
+                        <div class="bi-star-fill"></div>
+                      {% else %}
+                        <div class="bi-star"></div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <!-- Product price -->
+                  {% if producto.oferta %}
+                    <span class="text-muted text-decoration-line-through">${{ producto.precioanterior }}</span>
+                  {% else %}
+                    {% endif %}
+                  ${{ producto.precioactual }}
+                </div>
+              </div>
+              <!-- Product actions -->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto" href="">Agregar al carrito</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% else %}
+  <p>¡No hay productos registrados!</p>
+{% endif %}
+{% endblock contenido-principal %}
