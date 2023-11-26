@@ -42,8 +42,8 @@ class Cliente(models.Model):
     display_profesion.short_description = 'Profesion'
     
 class Contacto(models.Model):
-    nombre = models.CharField(max_length=100, default="Desconocido", help_text="Ingresa tu nombre")
-    apellido = models.CharField(blank=False, max_length=100, default="", help_text="Ingresa tu apellido")
+    nombre = models.CharField(max_length=100, help_text="Ingresa tu nombre")
+    apellido = models.CharField(max_length=100, help_text="Ingresa tu apellido")
     email = models.EmailField(max_length=100, help_text="Ingresa tu email")
     asunto = models.CharField(max_length=100, help_text="Ingresa tu ausnto")
     mensaje = models.CharField(max_length=100, help_text="Ingresa tu mensaje")

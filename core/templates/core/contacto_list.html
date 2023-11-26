@@ -4,6 +4,7 @@
   Clientes Registrados
 {% endblock %}
 {% block contenido-principal %}
+{% load static %}
 <section class="py-5">
 <h1 style="text-align: center;">Se han registrado en nuestro sitio</h1>
 {% if contacto_list %}
@@ -16,7 +17,7 @@
     border-radius: 2em;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);">
       <a href="{{ contacto.get_absolute_url }}">
-      <img src="https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg" 
+      <img src="{% static "core\images\usuario_registrado.png" %}" 
       style=" width: 60%;
       border-radius: 50%;
       margin: 0 auto;
@@ -26,7 +27,7 @@
       <div class="card-body">
         <h5 class="card-title" style="  font-weight: bold;
         font-size: 1.5em;">{{ contacto.nombre }} {{ contacto.apellido }}</h5>
-        <p class="card-text">Id: {{ contacto.id }}</p>
+        <p class="card-text">Email: {{ contacto.email }}</p>
         <a href="{{ contacto.get_absolute_url }}" class="btn btn-outline-dark mt-auto" style="border-radius: 2em;
         padding: 0.5em 1.5em;">Ver perfil</a>
       </div>

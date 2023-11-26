@@ -23,7 +23,7 @@ def index(request):
 class ProductoListView(generic.ListView):
     model = Producto
     # Paginacion
-    paginate_by = 6
+    paginate_by = 7
     
 class CategoriaListView(generic.ListView):
     model = Categoria
@@ -33,6 +33,8 @@ class ClienteListView(generic.ListView):
 
 class ContactoListView(generic.ListView):
     model = Contacto
+    # Paginacion
+    paginate_by = 5
     
 #Vistas para busquedas
 def buscar_productos(request):

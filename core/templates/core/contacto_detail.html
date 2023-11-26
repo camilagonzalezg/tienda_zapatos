@@ -4,6 +4,7 @@
   <title>Detalle Cliente Registrado</title>
 {% endblock %}
 {% block contenido-principal %}
+{% load static %}
 <section class="py-5 pt-0">
     <div class="container px-4 px-lg-5 mt-5">
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -13,7 +14,7 @@
       border-radius: 2em;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);">
         <a href="{{ contacto.get_absolute_url }}">
-        <img src="https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg" 
+        <img src="{% static "core\images\usuario_registrado.png" %}" 
         style=" width: 40%;
         border-radius: 50%;
         margin: 0 auto;
