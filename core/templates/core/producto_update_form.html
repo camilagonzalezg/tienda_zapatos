@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% block contenido-principal %}
+
+<section class="page-section" id="contact">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-lg-8 col-xl-6 text-center">
+        <h2 class="mt-0">Editar {{ producto.nombre }}</h2>
+      </div>
+    </div>
+    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+      <div class="col-lg-6">
+        <form id="contactForm" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for campo in form %}
+            {% if campo.field.widget.input_type == 'select' %}
+            <div class="mb-3">
+              <label for="" class="form-label">{{campo.label}}</label>
+              <div>
+                  {{campo}}
+              </div>
+          </div>    
+            {% else %}
+              <div class="form-floating mb-3">
+                <input type="{{ campo.field.widget.input_type}}"
+                  class="form-control" 
+                  name="{{campo.name}}"
+                  aria-describedby="{{campo.name}}Help"
+                  placeholder="Ingrese {{campo.label}}"
+                  value ="{{campo.value}}"/>
+                <label for="name">{{campo.label}}</label>
+              </div>
+              <div class="help-text">
+                <div class="text-center mb-3">
+                    {{campo.errors}}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-xl" >Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<br />
+<br />
+{% endblock contenido-principal %}

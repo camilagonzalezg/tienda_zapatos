@@ -22,4 +22,8 @@ urlpatterns = [
     path('cliente/<int:pk>/', views.ClienteDetailView.as_view(), name='cliente-detail'),
     path('contacto/<int:pk>/', views.ContactoDetailView.as_view(), name='contacto-detail'),
     path('categoria/<int:pk>/', views.CategoriaDetailView.as_view(), name='categoria-detail'),
+    # Vistas de edición genérica
+    path('producto/add/', views.ProductoCreateView.as_view(), name='producto-add'),
+    path('producto/<int:pk>/update/', views.ProductoUpdateView.as_view(), name='producto-update'),
+    path('producto/<int:pk>/delete/', views.ProductoDeleteView.as_view(), name='producto-delete'),
 ]

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Cliente, Producto, Categoria, Contacto
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .forms import FormularioContacto
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
@@ -104,6 +106,22 @@ class CategoriaDetailView(generic.DetailView):
     
 class ContactoDetailView(generic.DetailView):
     model = Contacto
+
+# MANTENEDORES DE PRODUCTOS
+# Vistas de edicion generica
+class ProductoCreateView(CreateView):
+    model = Producto
+    fields = ['id', 'nombre', 'precioactual', 'stock', 'imagen1', 'imagen2', 'categoria']
+    initial = {'stock':'0'}
+
+class ProductoUpdateView(UpdateView):
+    model = Producto
+    fields = ['id', 'nombre', 'precioactual', 'stock', 'imagen1', 'imagen2', 'categoria']
+    template_name_suffix = "_update_form"
+
+class ProductoDeleteView(DeleteView):
+    model = Producto
+    success_url = reverse_lazy("productos")
     
 def formulario(request):
     return render(request, "core/formulario.html")

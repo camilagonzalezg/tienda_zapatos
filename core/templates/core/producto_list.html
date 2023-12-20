@@ -65,6 +65,14 @@
         {% endfor %}
       </div>
     </div>
+    <div class="px-4 px-lg-5 mt-2 mb-5 text-center">
+      <h3>¿Desea agregar un producto?</h3>
+      <br>
+      <a class="btn btn-outline-dark mt-auto" href="{% url 'producto-add' %}">
+        <i class="bi bi-plus-circle-fill"></i>
+        Agregar
+      </a>
+    </div>
   </section>
 {% else %}
   <p>¡No hay productos registrados!</p>
