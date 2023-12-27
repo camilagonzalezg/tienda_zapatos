@@ -23,12 +23,19 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'productos' %}">Productos</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="{% url 'clientes' %}">Clientes</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="{% url 'contactos' %}">Clientes Registrados</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="{% url 'categorias' %}">Categorias</a></li>-->
                         <!--<li class="nav-item"><a class="nav-link" href="{% url 'buscar' %}">Buscar Productos</a></li>-->
-                        <li class="nav-item"><a class="nav-link" href="{% url "formulario" %}">Formulario Contáctenos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'formulario' %}">Formulario Contáctenos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'usuarios' %}">Consumir API Usuarios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'ordenes' %}">Consumir API REST Ordenes</a></li>
+                        {% endif %}
                     </ul>
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">

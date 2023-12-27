@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}
+  Usuarios
+{% endblock %}
+{% block contenido-principal %}
+<div class="container-fluid p-2 bg-primary text-white text-center">
+  <h1>Listado de Usuario - ReqRes</h1>
+</div>
+<div class="container mt-5">
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Id</th>
+              <th>Email</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Avatar</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for user in users %}
+          <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>
+                    <img src="{{ user.avatar }}" class="card-img-top" alt="Foto {{ user.avatar }}">
+                </td> 
+          </tr>
+          {% endfor %}    
+      </tbody>
+  </table>
+</div>
+
+{% endblock contenido-principal %}

@@ -1,11 +1,15 @@
 from django.shortcuts import render
-from .models import Cliente, Producto, Categoria, Contacto
+from .models import Cliente, Producto, Categoria, Contacto, Ordenes
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import FormularioContacto
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets, permissions
+from .serializers import OrdenesSerializer
+from .services import get_users, get_ordenes
 
 # Create your views here.
 def index(request):
@@ -15,10 +19,15 @@ def index(request):
     cant_categorias = Categoria.objects.all().count()
     #Obtencion de productos en la categoria "varios"
     prod_categoria = Producto.objects.filter(categoria__exact = '4').count()
+    # Manejo de sesiones
+    # Obtener la cantidad de visitas desde la sesión e incrementarla
+    num_visitas = request.session.get("num_visitas",1)
+    request.session["num_visitas"] = num_visitas + 1
     contexto = {'cant_clientes': cant_clientes,
                 'cant_productos': cant_productos,
                 'cant_categoria': cant_categorias,
-                'prod_categoria': prod_categoria
+                'prod_categoria': prod_categoria,
+                'visitas': num_visitas,
                 }
     return render(request, 'core/index.html', contexto)
 
@@ -131,3 +140,26 @@ def producto(request):
 
 def contacto(request):
     return render(request, "core/contacto.html")
+
+class OrdenesViewSet(viewsets.ModelViewSet):
+    # Origen de data.
+    queryset = Ordenes.objects.all()
+    # Permisos para las apps clientes
+    permission_classes = [permissions.AllowAny]
+    # Se indica el serializador
+    serializer_class = OrdenesSerializer
+    
+# Vista para consumir la API
+def muestra_usuarios_api(request):
+    params = {'page':'1'}
+    context = {
+        'users': get_users(params)
+    } 
+    return render(request, 'core/usuarios.html', context)
+
+def muestra_ordenes(request):
+    params = {}
+    context = {
+        'ordenes': get_ordenes(params)
+    } 
+    return render(request, 'core/ordenes.html', context)

@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}
+  Ordenes
+{% endblock %}
+{% block contenido-principal %}
+<div class="container-fluid p-2 bg-primary text-white text-center">
+  <h1>Listado de Ordenes - API REST</h1>
+</div>
+<div class="container mt-5">
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Id</th>
+              <th>Fecha Emision</th>
+              <th>Cliente</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Total</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for orden in ordenes %}
+          <tr>
+                <td>{{ orden.id }}</td>
+                <td>{{ orden.fecha_emision }}</td>
+                <td>{{ orden.cliente }}</td>
+                <td>{{ orden.producto }}</td>
+                <td>{{ orden.cantidad }}</td>
+                <td>{{ orden.precio_unitario }}</td> 
+                <td>{{ orden.total }}</td> 
+          </tr>
+          {% endfor %}    
+      </tbody>
+  </table>
+</div>
+
+{% endblock contenido-principal %}

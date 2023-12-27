@@ -85,3 +85,11 @@ class Categoria(models.Model):
     #Devuelve la url de una instancia particular del modelo Producto
     def get_absolute_url(self):
         return reverse('categoria-detail', kwargs={"pk": self.id})
+    
+class Ordenes(models.Model):
+    fecha_emision = models.DateTimeField(auto_now=True)
+    producto = models.CharField(max_length=200, help_text="Ingresa nombre Producto")
+    cliente = models.CharField(max_length=200, help_text="Ingresa nombre Cliente")
+    cantidad = models.IntegerField(help_text="Cantidad de Producto")
+    precio = models.IntegerField(help_text="Precio de Producto")
+    total = models.IntegerField(help_text="Total")

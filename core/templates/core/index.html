@@ -50,7 +50,10 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <p>
+                      Has visitado esta página {{ visitas }}
+                      {% if visitas == 1 %} vez. {% else %} veces. {% endif%}
+                    </p>
                 </div>
             </div>
         </section>
